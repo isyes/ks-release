@@ -331,7 +331,7 @@ func WriteReleaseNotes(releaseNotes *notes.ReleaseNotes) (err error) {
 			return errors.Wrapf(err, "encoding JSON output")
 		}
 	} else {
-		doc, err := document.New(releaseNotes, opts.StartRev, opts.EndRev)
+		doc, err := document.NewV2(releaseNotes, opts.StartRev, opts.EndRev)
 		if err != nil {
 			return errors.Wrapf(err, "creating release note document")
 		}
