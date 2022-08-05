@@ -60,9 +60,9 @@ var (
 		SilenceUsage:  true,
 		SilenceErrors: true,
 		RunE:          run,
-		PreRunE: func(*cobra.Command, []string) error {
-			return opts.ValidateAndFinish()
-		},
+		// PreRunE: func(cmd *cobra.Command, args []string) error {
+		// 	return opts.ValidateAndFinish()
+		// },
 	}
 )
 
@@ -521,6 +521,8 @@ func run_conf(*cobra.Command, []string) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(config)
+	// return nil
 	var allRepoReleaseNotes []*notes.ReleaseNotes
 	for _, opts := range config.Repos {
 		releaseNotes, err := notes.GatherReleaseNotes(opts)
@@ -548,6 +550,10 @@ func run(c *cobra.Command, params []string) error {
 	// TODO
 	if conf != "" {
 		return run_conf(c, params)
+	}
+	err := opts.ValidateAndFinish()
+	if err != nil {
+		return err
 	}
 	releaseNotes, err := notes.GatherReleaseNotes(opts)
 	if err != nil {
